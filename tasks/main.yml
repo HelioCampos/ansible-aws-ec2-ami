@@ -1,0 +1,27 @@
+---
+# tasks file for aws-ec2-ami
+#ec2-ami/tasks/ec2-ami.yml
+- fail: msg="The minimum Ansible version required to run is 2.0.1. To upgrade run 'sudo pip install --upgrade ansible'."
+  when: ansible_version.major|int != 2 and ansible_version.minor|int < 0 and ansible_version.revision|int < 1
+
+- name: Create ami
+  ec2_ami:
+    instance_id: "{{ ec2_ami_instance_id }}"
+    name: "{{ vivareal_project_build }}"
+    region: "{{ region }}"
+    wait: "{{ ec2_ami_wait | default(true) }}"
+    wait_timeout: "{{ wait_timeout | default(1000)}}"
+    tags: "{{ aws_resource_tags }}"
+    state: "{{ state | default('present') }}"
+  register: ec2_ami
+
+- name: Terminate instances that were previously launched when ec2_ami_on_build_terminate is defined
+  ec2:
+    state=absent
+    instance_ids="{{ ec2_ami_instance_id }}"
+    region="{{ region }}"
+  when: ec2_ami_on_build_terminate is defined
+
+- name: set fact ec2_ami_image_id
+  set_fact: ec2_ami_image_id="{{ ec2_ami.image_id }}"
+  when: ec2_ami.image_id is defined
