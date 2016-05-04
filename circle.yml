@@ -24,8 +24,9 @@ test:
 
 ## Customize deployment commands
 deployment:
-  staging:
+  production:
     branch: master
+    commands:
       - git tag -a $VERSION -m 'tag $VERSION'
       - git push origin $VERSION
 
