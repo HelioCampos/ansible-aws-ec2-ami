@@ -9,6 +9,7 @@
     instance_id: "{{ ec2_ami_instance_id }}"
     name: "{{ vivareal_project_build }}"
     region: "{{ region }}"
+    device_mapping: "{{ ec2_ami_device_mapping | default(omit) }}"
     wait: "{{ ec2_ami_wait | default(true) }}"
     wait_timeout: "{{ wait_timeout | default(1000)}}"
     tags: "{{ aws_resource_tags }}"
