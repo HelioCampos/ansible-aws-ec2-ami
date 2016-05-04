@@ -1,4 +1,4 @@
-AWS ec2 AMI 
+AWS ec2 AMI [![Circle CI](https://circleci.com/gh/VivaReal/ansible-aws-ec2-ami/tree/master.svg?style=svg&circle-token=3a1e853ab43ebd1e6b0f06bba849a81ddeff998d)](https://circleci.com/gh/VivaReal/ansible-aws-ec2-ami/tree/master)
 =========
 
 This ansible create or destroy an image in ec2. 
@@ -17,6 +17,7 @@ Role Variables
 | --------------------- | -------- | ------- | -------- |-------- |
 | ec2_ami_instance_id| yes | | | instance id of the image to create|
 | ec2_ami_on_build_terminate| no | |  | If not specified then the ec2 will not terminate after ami build|
+| device_mapping | no | | | An optional list of device hashes/dictionaries with custom configurations (same block-device-mapping parameters). Valid properties include: device_name, volume_type, size (in GB), delete_on_termination (boolean), no_device (boolean), snapshot_id, iops (for io1 volume_type)|
 | vivareal_project_build | yes | | | Ami name |
 | wait_timeout | no |1000 | | how long before wait gives up, in seconds|
 | aws_resource_tags  | yes  |   | | a hash/dictionary of tags to add to the new instance or for starting/stopping instance by tag; '{"key":"value"}' and '{"VREnv":"PROD","VRProject":"sample","VRTeam":"infra", "Name":"ami name"}' |

@@ -1,0 +1,35 @@
+machine:
+  python:
+    version: 2.7.10
+  environment:
+    MAJOR_VERSION: 0.1
+    VERSION: $MAJOR_VERSION"."$CIRCLE_BUILD_NUM
+dependencies:
+
+  pre:
+    - pip install --upgrade setuptools
+
+    - pip install ansible>=2.0.1
+
+    # Check ansible version
+    - ansible --version
+
+    # Create ansible.cfg with correct roles_path
+    - printf '[defaults]\nroles_path=../' >ansible.cfg
+
+test:
+  override:
+    - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+
+
+## Customize deployment commands
+deployment:
+  production:
+    branch: master
+    commands:
+      - git tag -a $VERSION -m 'tag $VERSION'
+      - git push origin $VERSION
+
+notify:
+  webhooks:
+    - url: https://galaxy.ansible.com/api/v1/notifications/
