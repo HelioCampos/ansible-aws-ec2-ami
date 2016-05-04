@@ -30,6 +30,12 @@ deployment:
       - git tag -a $VERSION -m 'tag $VERSION'
       - git push origin $VERSION
 
+  release:
+    tag: /release-.*/
+    owner: circleci
+    commands:
+      - "true"
+
 notify:
   webhooks:
     - url: https://galaxy.ansible.com/api/v1/notifications/
