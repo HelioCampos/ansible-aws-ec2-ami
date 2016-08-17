@@ -7,7 +7,7 @@
 - name: Create or delete ami
   ec2_ami:
     instance_id: "{{ ec2_ami_instance_id }}"
-    name: "{{ vivareal_project_build }}"
+    name: "{{ companys_project_build }}"
     region: "{{ region }}"
     device_mapping: "{{ ec2_ami_device_mapping | default(omit) }}"
     wait: "{{ ec2_ami_wait | default(true) }}"
